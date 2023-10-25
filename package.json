@@ -13,7 +13,9 @@
     "body-parser": "^1.20.2",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "node-cron": "^3.0.2"
+    "moment": "^2.29.4",
+    "node-cron": "^3.0.2",
+    "nodemailer": "^6.9.7"
   },
   "nodemonConfig": {
     "ignore": [

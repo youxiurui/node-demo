@@ -9,6 +9,7 @@ app.use(bodyParser.json())
 app.use(router.login)
 app.use(router.note)
 
+router.note()
 app.use((req, res) => {
   res.status(404)
   res.send("<h1>您访问的地址已被外星人劫持！</h1>")

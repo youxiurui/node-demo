@@ -1,29 +1,66 @@
 require('dotenv').config()
+const nodemailer = require('nodemailer');
 const SMSClient = require('@alicloud/sms-sdk')
 const cron = require('node-cron')
-const accessKeyId = '你的id'
-const secretAccessKey = '你的密钥'
-const SignName = '你的签名'
-const TemplateCode = '你的模板代码'
-const PhoneNumbers = '你的号码'
+const moment = require('moment')
+const accessKeyId = process.env.accessKeyId
+const secretAccessKey = process.env.secretAccessKey
+const SignName = process.env.SignName
+const TemplateCode = process.env.TemplateCode
+const MyPhone = process.env.MyPhone
+const TargetPhone = process.env.TargetPhone
 
 const smsClient = new SMSClient({ accessKeyId, secretAccessKey })
 
-function sendMsg(data) {
-    smsClient
-        .sendSMS({
-            PhoneNumbers,
-            SignName,
-            TemplateCode,
-            TemplateParam: `{"code":'${smsCode}'}`,
-        })
+const transporter = nodemailer.createTransport({
+    service: 'gmail', // 使用的邮件服务，这里以gmail为例
+    auth: {
+        user: process.env.MyMail, // 你的邮箱
+        pass: process.env.MyMailPsd // 你的邮箱密码
+    }
+})
+
+const mailOptions = {
+    from: process.env.MyMail, // 发送者
+    to: process.env.TargetMail, // 接收者
+    subject: '来自一只优秀瑞的提醒', // 邮件标题
+    text: '记得给你亲爱的老弟买衣服裤子和袜子' // 邮件内容
 }
 
+function sendMsg() {
+    // cron.schedule('0 22 * * *', () => {
+    //     note()
+    //     // mail()
+    // })
+}
+
+// 邮件发送
+function mail() {
+    const formattedDate = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (err) {
+            console.log(formattedDate,err)
+        } else {
+            console.log( formattedDate , info.response)
+        }
+    })
+}
+
+// 短信发送
 function note() {
-    cron.schedule('0 22 * * *',sendMsg())
+    const formattedDate = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+    try {
+        const res = smsClient
+            .sendSMS({
+                PhoneNumbers: TargetPhone,
+                SignName,
+                TemplateCode,
+                TemplateParam: `{"code":'${999999}'}`,
+            })
+            console.log(formattedDate,res)
+    } catch (err) {
+        console.log(formattedDate,err)
+    }
 }
 
-// note()
-console.log(process.env.accessKeyId)
-
-module.exports = note
+module.exports = sendMsg
