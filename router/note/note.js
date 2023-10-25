@@ -1,6 +1,6 @@
+require('dotenv').config()
 const SMSClient = require('@alicloud/sms-sdk')
 const cron = require('node-cron')
-
 const accessKeyId = '你的id'
 const secretAccessKey = '你的密钥'
 const SignName = '你的签名'
@@ -24,4 +24,6 @@ function note() {
 }
 
 // note()
+console.log(process.env.accessKeyId)
+
 module.exports = note
