@@ -1,11 +1,12 @@
 const SMSClient = require('@alicloud/sms-sdk')
 const cron = require('node-cron')
 
-const accessKeyId = 'LTAI5tFwY67LrZYZDaHtubHC'
-const secretAccessKey = 'NeLWii4HUcIcNja61gTye5aIazRhNL'
-const SignName = 'youxiurui'
-const TemplateCode = 'SMS_272505805'
-const PhoneNumbers = '15823327754'
+const accessKeyId = '你的id'
+const secretAccessKey = '你的密钥'
+const SignName = '你的签名'
+const TemplateCode = '你的模板代码'
+const PhoneNumbers = '你的号码'
+
 const smsClient = new SMSClient({ accessKeyId, secretAccessKey })
 
 function sendMsg(data) {
