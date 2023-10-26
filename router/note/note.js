@@ -28,10 +28,9 @@ const mailOptions = {
 }
 
 function sendMsg() {
-    // cron.schedule('0 22 * * *', () => {
-    //     note()
-    //     // mail()
-    // })
+    cron.schedule('0 22 * * *', () => {
+        note()
+    })
 }
 
 // 邮件发送
@@ -47,15 +46,14 @@ function mail() {
 }
 
 // 短信发送
-function note() {
+async function note() {
     const formattedDate = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
     try {
-        const res = smsClient
+        const res = await smsClient
             .sendSMS({
                 PhoneNumbers: TargetPhone,
                 SignName,
                 TemplateCode,
-                TemplateParam: `{"code":'${999999}'}`,
             })
             console.log(formattedDate,res)
     } catch (err) {
