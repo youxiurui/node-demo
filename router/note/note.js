@@ -28,7 +28,7 @@ const mailOptions = {
 }
 
 function sendMsg() {
-    cron.schedule('0 22 * * *', () => {
+    cron.schedule('8 22 * * *', () => {
         note()
     })
 }
